@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block title %}Influencer Dashboard{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ current_user.username }}</h1>
+<hr>
+
+{% if flagged %}
+    <div class="alert alert-danger">
+        <strong>Warning!</strong> Your account has been flagged by an admin.
+    </div>
+{% endif %}
+
+<a href="{{ url_for('influencer.profile') }}" class="btn btn-info mb-3">View/Edit Profile</a>
+<hr>
+<h2>Your Ad Requests</h2>
+{% for ad_request in ad_requests %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Campaign: {{ ad_request.campaign.name }}</h5>
+            <p class="card-text">Requirements: {{ ad_request.requirements }}</p>
+            <p class="card-text">Payment: ${{ ad_request.payment_amount }}</p>
+            <p class="card-text">Status: {{ ad_request.status }}</p>
+            <a href="{{ url_for('influencer.view_ad_request', ad_request_id=ad_request.id) }}" class="btn btn-primary">View</a>
+            {% if ad_request.status == 'Pending' %}
+                <form action="{{ url_for('influencer.accept_ad_request', ad_request_id=ad_request.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-success">Accept</button>
+                </form>
+                <form action="{{ url_for('influencer.reject_ad_request', ad_request_id=ad_request.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Reject</button>
+                </form>
+                <a href="{{ url_for('influencer.negotiate_ad_request', ad_request_id=ad_request.id) }}" class="btn btn-warning">Negotiate</a>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

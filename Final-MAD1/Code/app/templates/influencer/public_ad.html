@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Public Ad Requests{% endblock %}
+
+{% block content %}
+<h1>Public Ad Requests</h1>
+
+{% if public_ad_requests %}
+    {% for ad_request in public_ad_requests %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Campaign: {{ ad_request.campaign.name }}</h5>
+                <p>Influencer: {{ ad_request.influencer.username }}</p>
+                <p>Messages: {{ ad_request.messages }}</p>
+                <p>Requirements: {{ ad_request.requirements }}</p>
+                <p>Payment Amount: ${{ ad_request.payment_amount }}</p>
+                <p>Status: {{ ad_request.status }}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No public ad requests available.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,35 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <h2 class="text-center mb-4">All Influencers</h2>
+            <table class="table table-hover table-striped table-bordered align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Niche</th>
+                        <th scope="col">Reach</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for influencer in influencers %}
+                    <tr>
+                        <td>{{ influencer.username }}</td>
+                        <td>{{ influencer.email }}</td>
+                        <td>{{ influencer.influencer_profile.category }}</td>
+                        <td>{{ influencer.influencer_profile.niche }}</td>
+                        <td>{{ influencer.influencer_profile.reach }}</td>
+                        <td>
+                            <a href="{{ url_for('sponsor.view_influencer_profile', user_id=influencer.id) }}" class="btn btn-info btn-sm">View Profile</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

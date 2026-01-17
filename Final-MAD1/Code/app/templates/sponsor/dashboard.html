@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+{% block title %}Sponsor Dashboard{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ current_user.username }}</h1>
+<hr>
+
+{% if flagged %}
+    <div class="alert alert-danger">
+        <strong>Warning!</strong> Your account has been flagged by an admin.
+    </div>
+{% endif %}
+
+<a href="{{ url_for('sponsor.view_all_influencers') }}" class="btn btn-primary">View All Influencers</a>
+<hr>
+
+<a href="{{ url_for('sponsor.create_campaign') }}" class="btn btn-primary">Create Campaign</a>
+<a href="{{ url_for('sponsor.create_ad_request') }}" class="btn btn-primary">Create Ad Request</a>
+<hr>
+
+<!-- Display Campaigns -->
+<h2>Your Campaigns</h2>
+{% for campaign in campaigns %}
+    <div class="card mb-3 {% if campaign.flagged %}border-danger{% endif %}">
+        <div class="card-body">
+            <h5 class="card-title">{{ campaign.name }}</h5>
+            <p class="card-text">{{ campaign.description }}</p>
+            <p class="card-text">Budget: ${{ campaign.budget }}</p>
+            {% if campaign.flagged %}
+                <p class="text-danger"><strong>This campaign has been flagged by an admin.</strong></p>
+            {% endif %}
+            <a href="{{ url_for('sponsor.edit_campaign', campaign_id=campaign.id) }}" class="btn btn-warning">Edit</a>
+            <form action="{{ url_for('sponsor.delete_campaign', campaign_id=campaign.id) }}" method="POST" onsubmit="return confirmDelete()" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+{% endfor %}
+
+<hr>
+
+<!-- Display Ad Requests -->
+<h2>Your Ad Requests</h2>
+{% if ad_requests %}
+    {% for ad_request in ad_requests %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Campaign: {{ ad_request.campaign.name }}</h5>
+                <p class="card-text">Influencer: {{ ad_request.influencer.username }}</p>
+                <p class="card-text">Messages: {{ ad_request.messages }}</p>
+                <p class="card-text">Requirements: {{ ad_request.requirements }}</p>
+                <p class="card-text">Payment Amount: ${{ ad_request.payment_amount }}</p>
+                <p class="card-text">Status: {{ ad_request.status }}</p>
+
+                {% if ad_request.status == 'Negotiating' %}
+                    <p class="card-text text-warning">The influencer is negotiating the payment.</p>
+                    <!-- Options to accept or reject negotiation -->
+                    <a href="{{ url_for('sponsor.edit_ad_request', ad_request_id=ad_request.id) }}" class="btn btn-success">Review & Accept/Reject</a>
+                {% endif %}
+
+                <a href="{{ url_for('sponsor.edit_ad_request', ad_request_id=ad_request.id) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ url_for('sponsor.view_ad_request', ad_request_id=ad_request.id) }}" class="btn btn-info">View</a>
+                <form action="{{ url_for('sponsor.delete_ad_request', ad_request_id=ad_request.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No ad requests found.</p>
+{% endif %}
+
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this campaign?');
+    }
+</script>
+{% endblock %}
+
+
+
+<!-- Display Ad Requests  
+<h2>Your Ad Requests</h2>
+{% if ad_requests %}
+    {% for ad_request in ad_requests %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Campaign: {{ ad_request.campaign.name }}</h5>
+                <p class="card-text">Influencer: {{ ad_request.influencer.username }}</p>
+                <p class="card-text">Messages: {{ ad_request.messages }}</p>
+                <p class="card-text">Requirements: {{ ad_request.requirements }}</p>
+                <p class="card-text">Payment Amount: ${{ ad_request.payment_amount }}</p>
+                <p class="card-text">Status: {{ ad_request.status }}</p>
+                
+                
+                <a href="{{ url_for('sponsor.edit_ad_request', ad_request_id=ad_request.id) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ url_for('sponsor.view_ad_request', ad_request_id=ad_request.id) }}" class="btn btn-info">View</a>
+                <form action="{{ url_for('sponsor.delete_ad_request', ad_request_id=ad_request.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No ad requests found.</p>
+{% endif %}
+-->
+
+
+    

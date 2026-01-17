@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}View Ad Request{% endblock %}
+{% block content %}
+<h1>Ad Request Details</h1>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Campaign: {{ ad_request.campaign.name }}</h5>
+        <p class="card-text">Influencer: {{ ad_request.influencer.username }}</p>
+        <p class="card-text">Messages: {{ ad_request.messages }}</p>
+        <p class="card-text">Requirements: {{ ad_request.requirements }}</p>
+        <p class="card-text">Payment Amount: ${{ ad_request.payment_amount }}</p>
+        <p class="card-text">Status: {{ ad_request.status }}</p>
+        <a href="{{ url_for('sponsor.edit_ad_request', ad_request_id=ad_request.id) }}" class="btn btn-warning">Edit</a>
+        <a href="{{ url_for('sponsor.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

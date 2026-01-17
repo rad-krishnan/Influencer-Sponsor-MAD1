@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}Edit Ad Request{% endblock %}
+{% block content %}
+<h1>Edit Ad Request</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    
+    <!-- Campaign ID Dropdown -->
+    <div class="form-group">
+        {{ form.campaign_id.label(class="form-label") }}
+        {{ form.campaign_id(class="form-control") }}
+    </div>
+    
+    <!-- Influencer ID Dropdown -->
+    <div class="form-group">
+        {{ form.influencer_id.label(class="form-label") }}
+        {{ form.influencer_id(class="form-control") }}
+    </div>
+    
+    <!-- Messages Field -->
+    <div class="form-group">
+        {{ form.messages.label(class="form-label") }}
+        {{ form.messages(class="form-control", rows=3) }}
+    </div>
+    
+    <!-- Requirements Field -->
+    <div class="form-group">
+        {{ form.requirements.label(class="form-label") }}
+        {{ form.requirements(class="form-control", rows=3) }}
+    </div>
+    
+    <!-- Payment Amount Field -->
+    <div class="form-group">
+        {{ form.payment_amount.label(class="form-label") }}
+        {{ form.payment_amount(class="form-control") }}
+    </div>
+    
+    <!-- Status Dropdown -->
+    <div class="form-group">
+        {{ form.status.label(class="form-label") }}
+        {{ form.status(class="form-control") }}
+    </div>
+    
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary">Update Ad Request</button>
+</form>
+
+<!-- Link to go back to dashboard -->
+<a href="{{ url_for('sponsor.dashboard') }}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+{% endblock %}
+    
